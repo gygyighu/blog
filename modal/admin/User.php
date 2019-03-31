@@ -20,6 +20,6 @@ class User extends \modal\Db {
                 $list[] = $row;
             }
         }
-        var_dump($list);
+        return $list;
     }
 }

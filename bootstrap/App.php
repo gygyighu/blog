@@ -7,13 +7,18 @@
  */
 namespace bootstrap;
 class App {
+
     private $controller;
+    private $module;
     private $class;
     private $action;
+
     function __construct()
     {
+        $this->setModule('');
         $this->setClass('');
         $this->setAction('');
+        $GLOBALS['app'] = $this;
     }
 
     /**
@@ -32,7 +37,7 @@ class App {
             if($k == 0) {
                 $_action .= $v;
             }else {
-                $_action .= ucfirst(strtolower($v));
+                $_action .= ucfirst($v);
             }
         }
         $_controller = ucfirst($controller);
@@ -42,6 +47,7 @@ class App {
         }else {
             $controller_instancec = new $class();
             $this->controller = $controller_instancec;
+            $this->setModule($module);
             $this->setClass($_controller);
             $this->setAction($_action);
         }
@@ -56,12 +62,22 @@ class App {
         }
     }
 
+//-------setter-------
+    function setModule($module = '') {
+        $this->module = $module;
+    }
+
     function setClass($class) {
         $this->class = $class;
     }
 
     function setAction($action) {
         $this->action = $action;
+    }
+
+    //------getter-------
+    function getModule() {
+        return $this->module;
     }
 
     function getClass() {
@@ -71,6 +87,7 @@ class App {
     function getAction() {
         return $this->action;
     }
+
 
     function pageNotFound() {
         Header("HTTP/1.1 404 Not Found");

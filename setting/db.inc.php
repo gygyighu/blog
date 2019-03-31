@@ -12,5 +12,5 @@ $setting = [
     'pwd'       => '577494',
     'port'      => '3306',
     'charset'   => 'utf8',
-    'dbname'    => 'test',
+    'dbname'    => 'blogs',
 ];
