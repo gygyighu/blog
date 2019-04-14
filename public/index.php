@@ -4,6 +4,7 @@
  */
     error_reporting(E_ALL & ~E_NOTICE);
     date_default_timezone_set('Asia/Shanghai');
+    session_start();
 
     require_once '../setting/config.inc.php';
     require_once '../setting/setting.inc.php';
@@ -14,5 +15,7 @@
 
     $app = new \bootstrap\App();
     $app->init();
-    $app->run();
+    if($app->ready()) {
+        $app->run();
+    }
 

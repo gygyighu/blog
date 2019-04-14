@@ -23,3 +23,10 @@ spl_autoload_register(function($classname) use ($root_namespace) {
 
     return false;
 });
+
+set_exception_handler(function(Exception $e) {
+    if(FS_DEBUG) {
+        echo $e->getMessage();
+    }
+    error_log($e->getMessage() . "\t" . $e->getTraceAsString());
+});

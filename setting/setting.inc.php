@@ -4,4 +4,5 @@ $root_namespace = array(
     'bootstrap'   => APP_ROOT .'/bootstrap',
     'controller'  => APP_ROOT .'/controller',
     'modal'       => APP_ROOT . '/modal',
+    'common'      => APP_ROOT . '/common'
 );

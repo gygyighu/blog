@@ -21,6 +21,10 @@ class App {
         $GLOBALS['app'] = $this;
     }
 
+    function ready() {
+        return $this->controller->__init();
+    }
+
     /**
      * 初始化
      */

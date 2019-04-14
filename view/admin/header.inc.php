@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta charset="utf-8" />
-    <title>Empty Page - Ace Admin</title>
+    <title><?=_G('title')?> - <?=SITE_NAME?></title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
@@ -38,6 +38,21 @@
     <script src="/static/js/admin/html5shiv.js"></script>
     <script src="/static/js/admin/respond.js"></script>
     <![endif]-->
+
+    <!--[if !IE]> -->
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='/static/js/admin/jquery.js'>"+"<"+"/script>");
+    </script>
+
+    <!-- <![endif]-->
+
+    <!--[if IE]>
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='/static/js/admin/jquery1x.js'>"+"<"+"/script>");
+    </script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="/static/css/admin/myadmin.css" />
 </head>
 
 <body class="no-skin">
@@ -199,10 +214,11 @@
                 <!-- #section:basics/navbar.user_menu -->
                 <li class="light-blue">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        <img class="nav-user-photo" src="/static/images/admin/avatars/user.jpg" alt="Jason's Photo" />
+                        <?php $admin = _G('admin');?>
+                        <img class="nav-user-photo" src="<?=$admin['avatar']?>" alt="admin avatar" />
                         <span class="user-info">
 									<small>Welcome,</small>
-									Jason
+									<?=$admin['cnickname']?>
 								</span>
 
                         <i class="ace-icon fa fa-caret-down"></i>
@@ -210,7 +226,7 @@
 
                     <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer">
                         <li>
-                            <a href="#">
+                            <a href="/index.php/admin/user/mod?uid=<?=$admin['uid']?>" data-toggle="modal" data-target="#mod_admin">
                                 <i class="ace-icon fa fa-cog"></i>
                                 Settings
                             </a>
@@ -219,7 +235,7 @@
                         <li class="divider"></li>
 
                         <li>
-                            <a href="#">
+                            <a href="/index.php/admin/login/logout">
                                 <i class="ace-icon fa fa-power-off"></i>
                                 Logout
                             </a>
@@ -234,3 +250,57 @@
         <!-- /section:basics/navbar.dropdown -->
     </div><!-- /.navbar-container -->
 </div>
+<div class="modal fade in" id="mod_admin" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+<script src="/static/js/admin/distpicker.min.js"></script>
+<script>
+    $(function() {
+        $('#mod_admin').on('shown.bs.modal', function() {
+            $('[data-toggle="distpicker"]').distpicker();
+            $(this).find('.btn-apply').click(function() {
+                var $modal = $(this).parents('.modal').eq(0);
+                var $form = $modal.find('form');
+                var url = $form.attr('action');
+
+                if($form.find('input[name="cnickname"]').val() == '') {
+                    alert('请输入用户名');
+                    return false;
+                }
+                if($form.find('input[name="cmobile"]').val() == '') {
+                    alert('请输入手机号');
+                    return false;
+                }
+                if(!/^[1][3,4,5,7,8][0-9]{9}$/.test($form.find('input[name="cmobile"]').val())) {
+                    alert('请输入正确的手机号');
+                    return false;
+                }
+                if($form.find('input[name="cemail"]').val() == '') {
+                    alert('请输入邮箱');
+                    return false;
+                }
+                if(!/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/.test($form.find('input[name="cemail"]').val())) {
+                    alert('请输入正确的邮箱');
+                    return false;
+                }
+                if($modal.find('select[name="cprovince"]').val() == '' || $modal.find('select[name="ccity"]').val() == '') {
+                    alert('请选择省和市');
+                    return false;
+                }
+                $.post(url, $form.serialize(), function(data) {
+                    alert(data.msg);
+                    if(data.errcode == 0) {
+                        window.location.reload();
+                    }
+                }, 'json');
+            });
+        });
+        $('#mod_admin').on('hidden.bs.modal', function() {
+            $(this).removeData("bs.modal");
+        });
+    });
+</script>

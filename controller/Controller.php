@@ -11,6 +11,10 @@ class Controller {
 
     protected $temp_val;
 
+    function __init() {
+        return true;
+    }
+
     public function __construct()
     {
         $this->temp_val = array();
@@ -41,5 +45,10 @@ class Controller {
         ob_start();
         include $temp_file;
         ob_end_flush();
+    }
+
+    protected function error($msg) {
+        //todo: 待优化
+        echo $msg;
     }
 }

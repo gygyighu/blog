@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS users
 (
   uid           VARCHAR(36) NOT NULL comment 'UID',
   cnickname     VARCHAR(128) NOT NULL comment '昵称',
-  cpassword     VARCHAR(32) NOT NULL comment '密码',
+  cpassword     VARCHAR(255) NOT NULL comment '密码',
   cmobile       VARCHAR(11)  NOT NULL default ''  comment '手机号',
   cemail        VARCHAR(128) NOT NULL default '' COMMENT '邮箱',
   irole         INT(11) NOT NULL default 0  comment '角色',
@@ -24,7 +24,30 @@ ALTER TABLE users ADD  INDEX users_cnickname(cnickname);
 ALTER TABLE users add cprovince varchar(64) not null default '' after cemail;
 alter table users add ccity varchar(64) not null default '' after cprovince;
 alter table users add caddress varchar(128) not null default '' comment '详细地址' after ccity;
-alter table users add gender tinyint not null default 1 comment '性别：1：男，2：女' after cpassword ;
+alter table users add gender tinyint not null default 1 comment '性别：1：男，2：女，3：保密' after cpassword ;
+alter table users add avatar varchar(128) not null default '' comment '头像' after irole;
+
+-- 用户组
+DROP TABLE IF EXISTS ugroups;
+CREATE TABLE IF NOT EXISTS ugroups
+(
+  gid varchar(36) not null comment '组id',
+  group_name varchar(64) not null comment '组名',
+  itime int not null default 0,
+  update_time timestamp not null default current_timestamp on update current_timestamp,
+  primary key(gid)
+)engine=innodb, default charset=utf8mb4;
+
+DROP TABLE IF EXISTS user_groups;
+CREATE TABLE IF NOT EXISTS user_groups
+(
+  uid varchar(36) not null comment '用户id',
+  gid varchar(36) not null comment 'GID',
+  itime int not null default 0,
+  update_time timestamp not null default current_timestamp on update current_timestamp,
+  primary key(uid, gid)
+)engine=innodb, default charset=utf8mb4;
+
 
 -- --博客文章表--
 -- 状态：0：草稿，1：待发布，2：已发布

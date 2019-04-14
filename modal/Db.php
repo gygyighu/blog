@@ -25,7 +25,8 @@ abstract class Db {
                 PDO::ATTR_EMULATE_PREPARES => false,
             );
             $dsn = "{$setting['driver']}:host={$setting['host']};dbname={$setting['dbname']};port={$setting['port']};charset={$setting['charset']}";
-            self::$db = new \PDO($dsn, $setting['user'], $setting['pwd'], $options);
+            self::$db = new PDO($dsn, $setting['user'], $setting['pwd'], $options);
+//            self::$db->query('set names utf8');
         }
         return self::$db;
     }
