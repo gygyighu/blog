@@ -46,7 +46,7 @@
                                             <button type="submit" class="btn btn-info btn-sm">
                                                 <i class="ace-icon fa fa-key bigger-110"></i>搜索
                                             </button>
-                                            <a href="/index.php/admin/user/add" class="btn btn-xs btn-success pull-right" data-toggle="modal" data-target="#add">添加用户</a>
+                                            <a href="/index.php/admin/article/add" class="btn btn-xs btn-success pull-right">添加文章</a>
                                         </form>
                                     </div>
                                 </div>

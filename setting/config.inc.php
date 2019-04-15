@@ -6,7 +6,7 @@
  * Time: 11:19
  */
 
-define('APP_ROOT', 'D:/www/new_blog');
+define('APP_ROOT', 'D:/php/www/new_blog');
 define('SITE_NAME', '测试博客');
 define('FS_DEBUG', true);
 define('SITE_URL', 'www.note.com');
